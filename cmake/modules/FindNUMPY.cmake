@@ -14,7 +14,7 @@ endif()
 if (PYTHON_EXECUTABLE)
   # write a python script that finds the numpy path
   file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/FindNumpyPath.py
-      "try: import numpy; print numpy.get_include()\nexcept:pass\n")
+      "try: import numpy; print(numpy.get_include())\nexcept:pass\n")
 
   # execute the find script
   exec_program("${PYTHON_EXECUTABLE}" ${CMAKE_CURRENT_BINARY_DIR}
@@ -24,6 +24,9 @@ elseif(_numpy_out)
   message(STATUS "Python executable not found.")
 endif(PYTHON_EXECUTABLE)
 
+# message(STATUS '---------- find numpy ----------')
+# message(STATUS ${NUMPY_PATH})
+# message(STATUS ${PYTHON_INCLUDE_PATH})
 find_path(PYTHON_NUMPY_INCLUDE_DIR numpy/arrayobject.h
   "${NUMPY_PATH}"
   "${PYTHON_INCLUDE_PATH}"

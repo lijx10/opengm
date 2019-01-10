@@ -124,7 +124,7 @@ def visualizeGm(gm,plotUnaries=True,plotFunctions=False,plotNonShared=False,layo
             # increment node index
             nodeIndex+=1
 
-    print "get node position..."
+    print("get node position...")
     if  layout=='spring':
         pos=nx.spring_layout(G,dim=2,weight='weight',iterations=iterations) 
     elif layout=='dot':
@@ -145,7 +145,7 @@ def visualizeGm(gm,plotUnaries=True,plotFunctions=False,plotNonShared=False,layo
         except :
             raise NameError("unknown layout : "+layout)
     from networkx.drawing.nx_agraph import graphviz_layout
-    print "....done "
+    print("....done ")
 
 
 

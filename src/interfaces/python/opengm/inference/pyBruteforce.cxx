@@ -12,14 +12,22 @@
 #include <opengm/python/numpyview.hxx>
 #include <opengm/python/pythonfunction.hxx>
 
-
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
 
 using namespace boost::python;
 
 template<class GM,class ACC>
 void export_bruteforce(){
    using namespace boost::python;
-   import_array();
+   wrap_import_array();
    append_subnamespace("solver");
 
    // setup 

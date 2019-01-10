@@ -42,12 +42,21 @@ boost::python::object pyAd3Posteriors(const INF & inf){
    return obj;   
 }
 
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
 
 
 template<class GM,class ACC>
 void export_ad3(){
    using namespace boost::python;
-   import_array();
+   wrap_import_array();
    append_subnamespace("solver");
 
    std::string srName = semiRingName  <typename GM::OperatorType,ACC >() ;

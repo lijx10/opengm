@@ -33,12 +33,21 @@ void export_proposal_param( InfSetup & setup, const std::string & genName){
 }
 
 
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
 
 
 template<class GM,class ACC>
 void export_fusion_based(){
     using namespace boost::python;
-    import_array();
+    wrap_import_array();
     append_subnamespace("solver");
 
     // documentation 

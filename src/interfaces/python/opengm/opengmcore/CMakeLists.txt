@@ -24,8 +24,11 @@ include_directories(
     ${Boost_PYTHON_INCLUDE_DIR}
 )
 
-
-
+set(Boost_PYTHON_LIBRARIES /usr/lib/x86_64-linux-gnu/libboost_python-py35.so)
+message(STATUS "interfaces/python/opengm/opengmcore -----------------------------------")
+message(STATUS ${PYTHON_LIBRARY})
+message(STATUS ${Boost_INCLUDE_DIR})
+message(STATUS ${Boost_PYTHON_LIBRARIES})
 
 
 #--------------------------------------------------------------
@@ -79,6 +82,8 @@ endif()
 
 if(LINK_RT)
     find_library(RT rt)
+    message(STATUS 'findrt -------------')
+    message(STATUS ${rt})
     target_link_libraries(_opengmcore ${Boost_PYTHON_LIBRARIES} rt)
 else()
     target_link_libraries(_opengmcore ${PYTHON_LIBRARY} ${Boost_PYTHON_LIBRARIES})

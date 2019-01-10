@@ -21,6 +21,15 @@
 using namespace boost::python;
 
 
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
    
 
 template<class V,class I>
@@ -30,7 +39,7 @@ void export_ifactor(){
    typedef IndexType LabelType;
    typedef opengm::IndependentFactor<ValueType,IndexType,LabelType> PyIndependentFactor;
    
-   import_array();
+   wrap_import_array();
    docstring_options doc_options(true,true,false);
    typedef FactorShapeHolder<PyIndependentFactor> ShapeHolder;
    typedef FactorViHolder<PyIndependentFactor> ViHolder;

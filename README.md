@@ -1,6 +1,10 @@
 OpenGM 2
 ========
 
+### The original OpenGM supports only python2. This repository contains the version that supports Python3.
+
+### Will support both Python2 and Python3 in the future.
+
 [![Build Status](https://travis-ci.org/opengm/opengm.png?branch=master)](https://travis-ci.org/opengm/opengm)
 
 

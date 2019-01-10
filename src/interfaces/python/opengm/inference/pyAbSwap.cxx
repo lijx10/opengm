@@ -13,11 +13,20 @@
 
 #include <param/alpha_beta_swap_param.hxx>
 
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
 
 template<class GM,class ACC>
 void export_abswap(){
 
-   import_array(); 
+   wrap_import_array(); 
    typedef GM PyGm;
    typedef typename PyGm::ValueType ValueType;
    typedef typename PyGm::IndexType IndexType;

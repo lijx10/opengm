@@ -10,7 +10,9 @@ include_directories(
     ${Boost_PYTHON_INCLUDE_DIR}
 )
 
-
+message(STATUS "interfaces/python/opengm/interface -----------------------------------")
+message(STATUS ${Boost_INCLUDE_DIR})
+message(STATUS ${Boost_PYTHON_LIBRARIES})
 
 set(INF_TARGETS 
     inference.cpp

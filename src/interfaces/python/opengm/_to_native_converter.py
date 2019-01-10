@@ -1,5 +1,6 @@
-from _inf_param import _MetaInfParam, InfParam
-from opengmcore import IndexVector, BoolVector
+from ._inf_param import _MetaInfParam, InfParam
+from .opengmcore import IndexVector, BoolVector
+from past.builtins import long
 
 def is_inf_param(classType=None,instanceType=None):
    try:

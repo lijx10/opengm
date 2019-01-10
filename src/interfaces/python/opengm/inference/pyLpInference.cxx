@@ -21,11 +21,23 @@
 #include <opengm/inference/auxiliary/lp_solver/lp_solver_gurobi.hxx>
 #endif 
 
+
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
+
+
 // export function
 template<class GM, class ACC>
 void export_lp_inference() {
 
-   import_array();
+   wrap_import_array();
    using namespace boost::python;
    std::string srName = semiRingName  <typename GM::OperatorType,ACC >() ;
 

@@ -70,8 +70,8 @@ OPTION(BUILD_COMMANDLINE "Build Commandline" OFF)
 OPTION(WITH_AD3 "Include AD3" OFF)
 OPTION(WITH_CPLEX "Include CPLEX" OFF)
 OPTION(WITH_GUROBI "Include GUROBI" OFF)
-OPTION(WITH_BOOST "Include BOOST" OFF)
-OPTION(WITH_HDF5 "Include HDF5" OFF)
+OPTION(WITH_BOOST "Include BOOST" ON)
+OPTION(WITH_HDF5 "Include HDF5" ON)
 OPTION(WITH_TRWS "Include wrapper for TRWS code" OFF)
 OPTION(WITH_GCO "Include wrapper for GCO code" OFF)
 OPTION(WITH_MRF "Include wrapper for MRF code" OFF)
@@ -90,7 +90,7 @@ OPTION(WITH_VIGRA "Include VIGRA" OFF)
 OPTION(WITH_CONICBUNDLE "Include ConicBundleLibrary" OFF)
 OPTION(WITH_MATLAB "Activate MatLab-Code" OFF)
 OPTION(BUILD_CONVERTER "Build several converters" OFF)
-OPTION(BUILD_PYTHON_WRAPPER "Build python wrapper" OFF)
+OPTION(BUILD_PYTHON_WRAPPER "Build python wrapper" ON)
 OPTION(BUILD_MATLAB_WRAPPER "Build matlab wrapper" OFF)
 ###Grante needs C++11. Since we have not tested OpenGM under this standard yet, using Grante is realy experimental!!!
 ###OPTION(WITH_GRANTE "Include wrapper for grante" OFF)
@@ -168,6 +168,11 @@ if(WITH_BOOST)
    add_definitions(-DWITH_BOOST)
    add_definitions(-DWITH_BOOST_GRAPH)
    include_directories(${Boost_INCLUDE_DIR})
+   
+   set(Boost_PYTHON_LIBRARIES /usr/lib/x86_64-linux-gnu/libboost_python-py35.so)
+   message(STATUS "opengm root-----------------------------------")
+   message(STATUS ${Boost_INCLUDE_DIR})
+   message(STATUS ${Boost_PYTHON_LIBRARIES})
 else()
    message(STATUS "build without Boost")
 endif()
@@ -691,7 +696,7 @@ if(BUILD_PYTHON_WRAPPER)
    ENDIF()
 
    install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/src/interfaces/python/opengm"
-     DESTINATION "lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages"
+     DESTINATION "lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/dist-packages"
      FILES_MATCHING
      PATTERN "*.py"
      PATTERN "*.so"

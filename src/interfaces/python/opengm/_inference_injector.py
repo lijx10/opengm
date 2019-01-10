@@ -1,16 +1,22 @@
 import numpy     
-from opengmcore import LabelVector,IndependentFactor,index_type,value_type,label_type
-from inference  import InferenceTermination
+from .opengmcore import LabelVector,IndependentFactor,index_type,value_type,label_type
+from .inference  import InferenceTermination
+from six import with_metaclass
+
+
 
 def _injectGenericInferenceInterface(solverClass):
-    class InjectorGenericInference(object):
-        class __metaclass__(solverClass.__class__):
-            def __init__(self, name, bases, dict):
-                for b in bases:
-                    if type(b) not in (self, type):
-                        for k, v in dict.items():
-                            setattr(b, k, v)
-                return type.__init__(self, name, bases, dict)
+    class InjectorGenericInference_metaclass(solverClass.__class__):
+        def __init__(self, name, bases, dict):
+            for b in bases:
+                if type(b) not in (self, type):
+                    for k, v in dict.items():
+                        setattr(b, k, v)
+            return type.__init__(self, name, bases, dict)
+    class InjectorGenericInference(with_metaclass(InjectorGenericInference_metaclass, object)):
+        pass
+    # class InjectorGenericInference(object, metaclass=InjectorGenericInference_metaclass):
+    #     pass
 
     # if solver has marginalization interface
     if hasattr(solverClass, "_marginals") and hasattr(solverClass, "_factorMarginals") :

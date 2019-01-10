@@ -26,6 +26,9 @@ include_directories(
 )
 
 
+message(STATUS "interfaces/python/opengm/hdf5 -----------------------------------")
+message(STATUS ${Boost_INCLUDE_DIR})
+message(STATUS ${Boost_PYTHON_LIBRARIES})
 
 
 

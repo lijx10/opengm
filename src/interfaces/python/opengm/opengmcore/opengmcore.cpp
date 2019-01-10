@@ -565,7 +565,15 @@ void dequePushBack(
       deque.push_back(values(i));
 }
 
-
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
 
 BOOST_PYTHON_MODULE_INIT(_opengmcore) {
    Py_Initialize();
@@ -577,7 +585,7 @@ BOOST_PYTHON_MODULE_INIT(_opengmcore) {
    object package = scope();
    package.attr("__path__") = "opengm";
    
-   import_array();
+   wrap_import_array();
 
    register_exception_translator<opengm::RuntimeError>(&translateOpenGmRuntimeError);
    register_exception_translator<std::runtime_error>(&translateStdRuntimeError);

@@ -10,12 +10,24 @@
 #include <opengm/python/numpyview.hxx>
 #include <opengm/python/pythonfunction.hxx>
 
+
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
+
+
 template<class GM,class ACC>
 void export_gibbs(){
-   import_array(); 
+   wrap_import_array(); 
    // Py Inference Types 
    using namespace boost::python;
-   import_array();
+   wrap_import_array();
    append_subnamespace("solver");
 
    // setup 

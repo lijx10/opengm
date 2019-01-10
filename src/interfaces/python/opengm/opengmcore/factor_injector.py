@@ -1,5 +1,6 @@
-from _opengmcore import  adder,multiplier ,IndependentFactor
+from ._opengmcore import  adder,multiplier ,IndependentFactor
 import numpy
+from six import with_metaclass
 
 def _extend_factor_classes():
 
@@ -7,15 +8,17 @@ def _extend_factor_classes():
 
   for factorClass in _factorClasses:
 
-    class _FactorInjector(object):
-        class __metaclass__(factorClass.__class__):
-            def __init__(self, name, bases, dict):
+    class _FactorInjector_adder_multiplier_metaclass(factorClass.__class__):
+        def __init__(self, name, bases, dict):
 
-                for b in bases:
-                    if type(b) not in (self, type):
-                        for k,v in dict.items():
-                            setattr(b,k,v)
-                return type.__init__(self, name, bases, dict)
+            for b in bases:
+                if type(b) not in (self, type):
+                    for k,v in dict.items():
+                        setattr(b,k,v)
+            return type.__init__(self, name, bases, dict)
+
+    class _FactorInjector(with_metaclass(_FactorInjector_adder_multiplier_metaclass, object)):
+        pass
                 
     class _more_factor(_FactorInjector, factorClass):
       def __getitem__(self,labeling):
@@ -80,14 +83,14 @@ def _extend_factor_classes():
           >>> factor2Order=gm[100]
           >>> int(factor2Order.numberOfVariables)
           2
-          >>> print factor2Order.shape
+          >>> print(factor2Order.shape)
           [4, 4, ]
           >>> # fix the second variable index w.r.t. the factor to the label 3
           >>> subValueTable = factor2Order.subFactor(fixedVars=[1],fixedVarsLabels=[3])
           >>> subValueTable.shape
           (4,)
           >>> for x in range(4):
-          ...     print factor2Order[x,3]==subValueTable[x]
+          ...     print(factor2Order[x,3]==subValueTable[x])
           True
           True
           True
@@ -106,15 +109,17 @@ def _extend_factor_classes():
 
   for factorClass in _factorClasses:
 
-    class _FactorInjector(object):
-        class __metaclass__(factorClass.__class__):
-            def __init__(self, name, bases, dict):
+    class _FactorInjector_independent_metaclass(factorClass.__class__):
+        def __init__(self, name, bases, dict):
 
-                for b in bases:
-                    if type(b) not in (self, type):
-                        for k,v in dict.items():
-                            setattr(b,k,v)
-                return type.__init__(self, name, bases, dict)
+            for b in bases:
+                if type(b) not in (self, type):
+                    for k,v in dict.items():
+                        setattr(b,k,v)
+            return type.__init__(self, name, bases, dict)
+
+    class _FactorInjector(with_metaclass(_FactorInjector_independent_metaclass, object)):
+        pass
                 
     class _more_factor(_FactorInjector, factorClass):
       def __getitem__(self,labeling):
@@ -182,14 +187,14 @@ def _extend_factor_classes():
           >>> factor2Order=gm[100].asIndependentFactor()
           >>> int(factor2Order.numberOfVariables)
           2
-          >>> print factor2Order.shape
+          >>> print(factor2Order.shape)
           [4, 4, ]
           >>> # fix the second variable index w.r.t. the factor to the label 3
           >>> subValueTable = factor2Order.subFactor(fixedVars=[1],fixedVarsLabels=[3])
           >>> subValueTable.shape
           (4,)
           >>> for x in range(4):
-          ...     print factor2Order[x,3]==subValueTable[x]
+          ...     print(factor2Order[x,3]==subValueTable[x])
           True
           True
           True

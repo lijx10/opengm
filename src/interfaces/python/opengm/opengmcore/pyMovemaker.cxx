@@ -131,13 +131,24 @@ namespace pymovemaker{
 }
 
 
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
+
+
 template<class GM>
 void export_movemaker() {
    using namespace boost::python;
    boost::python::numeric::array::set_module_and_type("numpy", "ndarray");
    boost::python::docstring_options docstringOptions(true,true,false);
    
-   import_array();
+   wrap_import_array();
    typedef GM PyGm;
    typedef typename PyGm::SpaceType PySpace;
    typedef typename PyGm::ValueType ValueType;

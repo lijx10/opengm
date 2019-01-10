@@ -19,6 +19,12 @@
 #include <opengm/graphicalmodel/graphicalmodel.hxx>
 #include <opengm/python/numpyview.hxx>
 
+#if PY_MAJOR_VERSION >= 3
+  #define PyInt_FromLong               PyLong_FromLong
+  #define PyInt_AsLong                 PyLong_AsLong
+  #define PyInt_AS_LONG                PyLong_AS_LONG
+#endif
+
 namespace opengm{
 namespace python{
 

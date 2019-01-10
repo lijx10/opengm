@@ -1,9 +1,12 @@
-from _opengmcore import adder,multiplier,IndexVector,FunctionIdentifier,FidVector,IndexVectorVector
-from factorSubset import FactorSubset
-from dtypes import index_type,label_type,value_type
+from ._opengmcore import adder,multiplier,IndexVector,FunctionIdentifier,FidVector,IndexVectorVector
+from .factorSubset import FactorSubset
+from .dtypes import index_type,label_type,value_type
 import numpy
 
-from function_injector import isNativeFunctionType,isNativeFunctionVectorType
+from six import with_metaclass
+from past.builtins import long
+
+from .function_injector import isNativeFunctionType,isNativeFunctionVectorType
 
 LabelVector = IndexVector
 
@@ -110,21 +113,28 @@ def _extend_gm_classes():
 
   _gmClasses = [adder.GraphicalModel,multiplier.GraphicalModel ]
 
-  for gmClass in _gmClasses:
-    #gmClass._init_impl_=gmClass.__init__
-    class _InjectorGm(object):
-        class __metaclass__(gmClass.__class__):
-            def __init__(self, name, bases, dict):
+  # for gmClass in _gmClasses:
+  if True:
+    gmClass = adder.GraphicalModel
+    # gmClass._init_impl_=gmClass.__init__
 
-                for b in bases:
-                    if type(b) not in (self, type):
-                        for k,v in dict.items():
-                            setattr(b,k,v)
-                return type.__init__(self, name, bases, dict)
+    class _InjectorGm_metaclass(gmClass.__class__):
+        def __init__(self, name, bases, dict):
+            for b in bases:
+                if type(b) not in (self, type):
+                    for k,v in dict.items():
+                        setattr(b,k,v)
+            return type.__init__(self, name, bases, dict)
+
+    class _InjectorGm(with_metaclass(_InjectorGm_metaclass, object)):
+         pass
+    #class _InjectorGm(object, metaclass=_InjectorGm_metaclass):
+    #    pass
+        
 
     class _more_gm(_InjectorGm, gmClass):
-      #def __init__(self,*args,**kwargs):
-        #return self._init_impl_(*args,**kwargs)
+      # def __init__(self,*args,**kwargs):
+        # return self._init_impl_(*args,**kwargs)
 
 
       def testf(self):
@@ -478,11 +488,12 @@ def _extend_gm_classes():
               return self._addFunctions_generator(functions)
             except:
               raise RuntimeError( "%s is an not a supported type for addFunctions "%(str(type(functions)),) )
+
       
 
 
 
-#_extend_gm_classes()
+# _extend_gm_classes()
 
 
 if __name__ == "__main__":

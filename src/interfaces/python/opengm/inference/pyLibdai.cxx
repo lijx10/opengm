@@ -18,7 +18,15 @@ using namespace boost::python;
 
 
 
-
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
 
 
 
@@ -29,7 +37,7 @@ void export_libdai_inference(){
 
 
 	using namespace boost::python;
-   import_array();
+   wrap_import_array();
    append_subnamespace("solver");
    
    // INFERENCE TYPEDEFS

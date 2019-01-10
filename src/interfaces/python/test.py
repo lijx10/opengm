@@ -557,7 +557,7 @@ class TestGm:
                 minOrder=order), gm.factorsAndIds(minOrder=order)]
             assert(len(gens) == 3)
             for gen in gens:
-                print "len assert"
+                print("len assert")
                 assert lenOfGen(gen) == 6 - order
             gens = [gm.factors(minOrder=order), gm.factorIds(
                 minOrder=order), gm.factorsAndIds(minOrder=order)]
@@ -580,7 +580,7 @@ class TestGm:
                 maxOrder=order), gm.factorsAndIds(maxOrder=order)]
             assert(len(gens) == 3)
             for gen in gens:
-                print "len assert"
+                print("len assert")
                 assert lenOfGen(gen) == order
             gens = [gm.factors(maxOrder=order), gm.factorIds(
                 maxOrder=order), gm.factorsAndIds(maxOrder=order)]
@@ -604,7 +604,7 @@ class TestGm:
                     gm.factorsAndIds(minOrder=order, maxOrder=4)]
             assert(len(gens) == 3)
             for gen in gens:
-                print "len assert"
+                print("len assert")
                 assert lenOfGen(gen) == 6 - order - 1
             gens = [gm.factors(minOrder=order, maxOrder=4),
                     gm.factorIds(minOrder=order, maxOrder=4),

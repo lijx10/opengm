@@ -1,4 +1,4 @@
-from _opengmcore import ExplicitFunction,SparseFunction, \
+from ._opengmcore import ExplicitFunction,SparseFunction, \
                         TruncatedAbsoluteDifferenceFunction, \
                         TruncatedSquaredDifferenceFunction,PottsFunction,PottsNFunction, \
                         PottsGFunction,\
@@ -7,6 +7,7 @@ from _opengmcore import ExplicitFunction,SparseFunction, \
                         TruncatedSquaredDifferenceFunctionVector,PottsFunctionVector,PottsNFunctionVector, \
                         PottsGFunctionVector
 import numpy
+from six import with_metaclass
 
 
 
@@ -29,14 +30,17 @@ def _extend_function_vector_classes():
                                  ]  
 
     for function_vector in function_vector_classes:
-        class InjectorGenericFunctionVector(object):
-            class __metaclass__(function_vector.__class__):
-                def __init__(self, name, bases, dict):
-                    for b in bases:
-                        if type(b) not in (self, type):
-                            for k,v in dict.items():
-                                setattr(b,k,v)
-                    return type.__init__(self, name, bases, dict)
+        class InjectorGenericFunctionVector_metaclass(function_vector.__class__):
+            def __init__(self, name, bases, dict):
+                for b in bases:
+                    if type(b) not in (self, type):
+                        for k,v in dict.items():
+                            setattr(b,k,v)
+                return type.__init__(self, name, bases, dict)
+        class InjectorGenericFunctionVector(with_metaclass(InjectorGenericFunctionVector_metaclass, object)):
+            pass
+        # class InjectorGenericFunctionVector(object, metaclass=InjectorGenericFunctionVector_metaclass):
+        #     pass
 
 
         class PyAddon_GenerricFunctionVector(InjectorGenericFunctionVector,function_vector):
@@ -62,15 +66,19 @@ def _extend_function_type_classes():
     #if hasattr(function_class, "_raw_init_")==False:
     # function_class._raw_init_=function_class.__init__
     #assert hasattr(function_class, "_raw_init_")
+
+    class InjectorGenericFunction_metaclass(function_class.__class__):
+        def __init__(self, name, bases, dict):
+            for b in bases:
+                if type(b) not in (self, type):
+                    for k,v in dict.items():
+                        setattr(b,k,v)
+            return type.__init__(self, name, bases, dict)
     
-    class InjectorGenericFunction(object):
-        class __metaclass__(function_class.__class__):
-            def __init__(self, name, bases, dict):
-                for b in bases:
-                    if type(b) not in (self, type):
-                        for k,v in dict.items():
-                            setattr(b,k,v)
-                return type.__init__(self, name, bases, dict)
+    class InjectorGenericFunction(with_metaclass(InjectorGenericFunction_metaclass, object)):
+        pass
+    # class InjectorGenericFunction(object, metaclass=InjectorGenericFunction_metaclass):
+    #     pass
 
 
     class PyAddon_GenerricFunction(InjectorGenericFunction,function_class):

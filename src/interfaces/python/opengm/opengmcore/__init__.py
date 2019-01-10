@@ -1,14 +1,14 @@
-from _opengmcore import *
-from _opengmcore import _gridVis2d
-from factorSubset import FactorSubset
-from gm_injector import _extend_gm_classes
-from factor_injector import _extend_factor_classes
-from function_injector import _extend_function_type_classes,\
+from ._opengmcore import *
+from ._opengmcore import _gridVis2d
+from .factorSubset import FactorSubset
+from .gm_injector import _extend_gm_classes
+from .factor_injector import _extend_factor_classes
+from .function_injector import _extend_function_type_classes,\
                               _extend_function_vector_classes,\
                               isNativeFunctionType,\
                               isNativeFunctionVectorType
-from dtypes import index_type,value_type,label_type
-from printing import prettyValueTable
+from .dtypes import index_type,value_type,label_type
+from .printing import prettyValueTable
 import numpy
 
 configuration=OpengmConfiguration()
@@ -304,8 +304,8 @@ def pottsModel3d(unaries, regularizer, order='numpy', operator='adder'):
         f = adder._pottsModel3d
     else :
         f = multiplier._pottsModel3d
-    print unaries.shape
-    print regularizer.shape
+    print(unaries.shape)
+    print(regularizer.shape)
     gm = f(unaries, regularizer, order == 'numpy')
     return gm
 

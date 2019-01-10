@@ -1,4 +1,4 @@
-from shapewalker import shapeWalker
+from .shapewalker import shapeWalker
 
 def prettyValueTable(valueTable,vis=None):
     try:

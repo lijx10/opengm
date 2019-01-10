@@ -47,12 +47,22 @@ void export_intersection_based_proposal_param( InfSetup & setup, const std::stri
 }
 
 
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
+
 
 
 template<class GM,class ACC>
 void export_intersection_based(){
     using namespace boost::python;
-    import_array();
+    wrap_import_array();
     append_subnamespace("solver");
 
     // documentation 
@@ -147,7 +157,7 @@ void export_cgc(){
 
    {
       using namespace boost::python;
-      import_array();
+      wrap_import_array();
       append_subnamespace("solver");
 
       // setup 

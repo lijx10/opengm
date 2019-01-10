@@ -7,7 +7,7 @@ ZIP_FOLDER=../zip_files/
 PATCH_FOLDER=./
 #IBFS_FILENAME=ibfs.zip
 #IBFS_URL=http://www.cs.tau.ac.il/~sagihed/ibfs/
-IBFS_FILENAME=ibfs.tar
+IBFS_FILENAME=IBFS.zip
 IBFS_URL=http://www.cs.tau.ac.il/~sagihed/ibfs/download/
 
 IBFS_SOURCE_FOLDER=../../ibfs.src-patched/
@@ -40,8 +40,8 @@ fi
 # extract files
 echo "Extracting files from $IBFS_FILENAME"
 mkdir $IBFS_SOURCE_FOLDER
-tar xvf  $ZIP_FOLDER$IBFS_FILENAME -C $IBFS_SOURCE_FOLDER
-#unzip -juqn $ZIP_FOLDER$IBFS_FILENAME -d $IBFS_SOURCE_FOLDER
+# tar xvf  $ZIP_FOLDER$IBFS_FILENAME -C $IBFS_SOURCE_FOLDER
+unzip -juqn $ZIP_FOLDER$IBFS_FILENAME -d $IBFS_SOURCE_FOLDER
 if [ "$?" = "0" ]
 then :
 else

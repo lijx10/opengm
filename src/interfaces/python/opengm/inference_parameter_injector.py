@@ -4,7 +4,7 @@ def _injectGenericInferenceParameterInterface(solverParamClass,infParam,subInfPa
    BoostPythonMetaclass=solverParamClass.__class__
    class InjectorGenericInferenceParameter(object):
       def __init__(self,*args,**kwargs):
-         print "in init"
+         print("in init")
       class __metaclass__(BoostPythonMetaclass):
          def __init__(self, name, bases, dict):
             for b in bases:
@@ -30,7 +30,7 @@ def _injectGenericInferenceParameterInterface(solverParamClass,infParam,subInfPa
                      self_proxy=args[0]
                      assert isinstance(self_proxy,solverParamClass)
                      name,nativeValue=self_proxy._setattr_helper__(*args[1:len(args)],**kwargs)
-                     print nativeValue
+                     print(nativeValue)
                      super(solverParamClass,self_proxy).__setattr__(name, nativeValue)
 
                   b.__setattr__=newSetAttr   
@@ -136,7 +136,7 @@ def _injectGenericInferenceParameterInterface(solverParamClass,infParam,subInfPa
             space='         '
          old_stdout = sys.stdout
          sys.stdout = mystdout = StringIO()
-         print space+"Parameters of this Solver:\n\n"
+         print(space+"Parameters of this Solver:\n\n")
          for propertyName, value in vars(solverParamClass).iteritems(): 
             if( (propertyName.startswith('__') or propertyName.endswith('__')) ==False ):
                #check if it is a property

@@ -6,6 +6,17 @@
 #include <param/icm_param.hxx>
 
 
+#if PY_MAJOR_VERSION == 2
+static void wrap_import_array() {
+    import_array();
+}
+#else
+static void * wrap_import_array() {
+    import_array();
+}
+#endif
+
+
 // export function
 template<class GM, class ACC>
 void export_icm() {
@@ -13,7 +24,7 @@ void export_icm() {
    using namespace boost::python;
    //Py_Initialize();
    //PyEval_InitThreads();
-   import_array();
+   wrap_import_array();
    append_subnamespace("solver");
 
    // setup 
